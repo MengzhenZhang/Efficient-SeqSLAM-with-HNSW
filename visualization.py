@@ -25,7 +25,6 @@ groundtruthMat
 groundtruthMat = groundtruthMat['truth'][::2, ::2]
 groundtruthMat
 
-# 上述 gt 中还是存在一行中连续多列为 1，即一幅图片还可能与多幅邻近的图片匹配，在计算 positive 时不能直接累加，否则 recall 会很低
 gt_loop = np.count_nonzero(np.sum(groundtruthMat, 1))
 
 
@@ -34,10 +33,6 @@ num_elements = len(VLADs)
 
 p = hnswlib.Index(space='l2', dim=dim)
 
-# 依据具体的数据点，初始化索引
-# 这里是指定可以存储的最多元素数目
-# ef_construction 对应动态列表长度
-# M 对应每个新节点创建的连边数目
 p.init_index(max_elements=num_elements, ef_construction=100, M=64)
 p.set_ef(100)
 
@@ -74,12 +69,11 @@ for index, vlad in enumerate(VLADs):
 
 matches[:, 1] = matches[:, 1] / np.nanmax(matches[:, 1])
 
-# 4. Evaluation the matches by PR curve
+# Evaluation the matches by PR curve
 
 pr = []
 row = matches.shape[0]
 
-"""
 for mu in np.arange(0, 1, 0.01):
     idx = np.copy(matches[:, 0])  # The LARGER the score, the WEAKER the match.
     idx[matches[:, 1] > mu] = np.nan  # remove the weakest matches
@@ -112,7 +106,6 @@ plt.axis([0, 1.05, 0, 1.05])
 plt.show()
 
 
-"""
 
 
 # show matched images, correct or not
@@ -126,8 +119,7 @@ for i in range(row):
      if not np.isnan(idx[i]):
          loopMat[i, int(idx[i])] = 1
 
-"""
-path = 'datasets/NewCollege/Images'   # change to your path
+path = 'datasets/NewCollege/Images'   
 imagePaths = sorted(glob.glob(path+"/*.jpg"))[::2]
 
 for i in range(row):
@@ -146,7 +138,6 @@ for i in range(row):
             cv2.waitKey()
 
 
-"""
 
 # show conffusion matrix as an image
 confImg = np.zeros((row, row, 3), np.uint8)

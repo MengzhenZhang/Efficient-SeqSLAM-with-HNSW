@@ -24,7 +24,6 @@ groundtruthMat
 groundtruthMat = groundtruthMat['truth'][::2, ::2]
 groundtruthMat
 
-# 上述 gt 中还是存在一行中连续多列为 1，即一幅图片还可能与多幅邻近的图片匹配，在计算 positive 时不能直接累加，否则 recall 会很低
 gt_loop = np.count_nonzero(np.sum(groundtruthMat, 1))
 
 prs = []
@@ -36,10 +35,6 @@ for ds in [2,5,10,25,50]:
     
     p = hnswlib.Index(space='l2', dim=dim)
     
-    # 依据具体的数据点，初始化索引
-    # 这里是指定可以存储的最多元素数目
-    # ef_construction 对应动态列表长度
-    # M 对应每个新节点创建的连边数目
     p.init_index(max_elements=num_elements, ef_construction=100, M=64)
     p.set_ef(100)
     
@@ -66,8 +61,6 @@ for ds in [2,5,10,25,50]:
                 node = np.array(
                     list(itertools.chain.from_iterable(vlad_seq)), dtype='float32')
     
-                # 给定 query，返回搜索结果
-                # 返回的 indices 和 distances 都是 np.array
                 indice, distance = p.knn_query(node, k=1)
     
                 matches[index, 0] = int(indice)
@@ -76,7 +69,7 @@ for ds in [2,5,10,25,50]:
     
     matches[:, 1] = matches[:, 1] / np.nanmax(matches[:, 1])
     
-    # 4. Evaluation the matches by PR curve
+    # Evaluation the matches by PR curve
     
     pr = []
     row = matches.shape[0]
@@ -116,57 +109,3 @@ ax.grid()
 plt.axis([0, 1.05, 0, 1.05])
 plt.legend(['p=2', 'p=5', 'p=10', 'p=25', 'p=50'], loc="lower left")
 plt.show()
- 
-
-"""
-
-
-# show matched images, correct or not
-mu = 0.9
-
-idx = np.copy(matches[:, 0])  # The LARGER the score, the WEAKER the match.
-idx[matches[:, 1] > mu] = np.nan  # remove the weakest matches
-loopMat = np.zeros((row, row))
-
-for i in range(row):
-     if not np.isnan(idx[i]):
-         loopMat[i, int(idx[i])] = 1
-
-
-path = 'datasets/NewCollege/Images'   # change to your path
-imagePaths = sorted(glob.glob(path+"/*.jpg"))[::2]
-
-for i in range(row):
-    for j in range(row):
-        if loopMat[i,j] == 1 and groundtruthMat[i,j] == 1:
-            img1 = cv2.imread(imagePaths[i])
-            img2 = cv2.imread(imagePaths[j])
-            cv2.imshow("Correct match 1", img1)
-            cv2.imshow("Correct match 2", img2)
-            cv2.waitKey()
-        elif loopMat[i,j] == 1 and groundtruthMat[i,j] == 0:
-            img1 = cv2.imread(imagePaths[i])
-            img2 = cv2.imread(imagePaths[j])
-            cv2.imshow("Incorrect match 1", img1)
-            cv2.imshow("Incorrect match 2", img2)
-            cv2.waitKey()
-
-
-
-# show conffusion matrix as an image
-confImg = np.zeros((row, row, 3), np.uint8)
-for i in range(row):
-    for j in range(row):
-        if groundtruthMat[i, j] == 1:
-            if loopMat[i, j] == 0:
-                confImg[i, j, :] = (255, 255, 255)
-            else:
-                cv2.circle(confImg, (j, i), 3, (0, 0, 255), -1)
-
-cv2.namedWindow("Confusion matrix", cv2.WINDOW_NORMAL)
-cv2.imshow("Confusion matrix", confImg)
-cv2.resizeWindow("Confusion matrix", 800, 800)
-cv2.waitKey()
-
-cv2.imwrite("confImage.jpg", confImg)
-"""
