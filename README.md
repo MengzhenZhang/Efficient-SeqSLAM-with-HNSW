@@ -15,4 +15,4 @@ Run `generateVLADs.py` to generate  VLADs.
 
 3. Run `visualization.py` to reproduce our results including correct and incorrect pairs of matches, confusion matrix.
 
-4. Run `differentLengthOfSeq.py` to reproduce the result about differnt length of sequence.
+4. Run `differentLengthOfSeq.py` to reproduce the result about different lengths of sequence.
