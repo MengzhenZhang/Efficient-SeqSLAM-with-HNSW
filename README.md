@@ -1,9 +1,11 @@
 # Efficient-SeqSLAM-with-HNSW
 This repo shares code used in our manuscript
 
-Note that I did not include datasets NewCollege and CityCentre in this repo. They are publicly available here `https://www.robots.ox.ac.uk/~mobile/IJRR_2008_Dataset/data.html`.
+Note that the datasets NewCollege and CityCentre are not included in this repo due to their large size. They are publicly available here `https://www.robots.ox.ac.uk/~mobile/IJRR_2008_Dataset/data.html`.
 
 Please change the path to datasets according to your case.
+
+**Platform: ** Ubuntu 18.04 + Python 3.8 
 
 **Main steps to reproduce our results**
 
