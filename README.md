@@ -5,7 +5,7 @@ Note that the datasets NewCollege and CityCentre are not included in this repo d
 
 Please change the path to datasets according to your case.
 
-**Platform: ** Ubuntu 18.04 + Python 3.8 
+**Platform**:  Ubuntu 18.04 + Python 3.8 
 
 **Main steps to reproduce our results**
 
