@@ -84,7 +84,7 @@ Please change the path to datasets according to your case.
 8. Show time comparison between SeqSLAM + VLAD and SeqSLAM + VLAD + HNSW
 
    ```bash
-   python 10_compareTime.py --seq_vlad timeFiles/NewCollegeSeqVLAD.pickle --seq_vlad_hnsw timeFiles/NewCollegeHNSW.pickle 
+   python 10_compareTime.py --seq_vlad files_time/nc_seq_vlad.pickle --seq_vlad_hnsw files_time/nc_seq_vlad_hnsw.pickle 
    ```
 
    
