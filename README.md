@@ -12,7 +12,7 @@ Please change the path to datasets according to your case.
 1. Generate a visual dictionary offline.
 
    ```bash
-   python 0_dict.py  --dataset datasets/NewCollege/Images	--outputDict files_dict/nc_dict.pickle
+   python 0_dict.py  --dataset datasets/NewCollege/Images --outputDict files_dict/nc_dict.pickle
    ```
    
 2. To avoid converting images to VLADs in each experiment, we can save the VLADs in a pickle file, and directly load them in following experiments.
