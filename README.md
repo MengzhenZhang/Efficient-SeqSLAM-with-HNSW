@@ -38,7 +38,7 @@ Please change the path to datasets according to your case.
      # (3) Run the follow command to generate similarity matrix
      ./build/loop_closure orbvoc.dbow3 ../datasets/NewCollege/Images similarityMat.txt
      # (4) Run the following script which calculates PR from the above similarity matrix
-     python convert_to_mat.py --inputSimMat similarityMat.txt --GT ../datasets/NewCollege/NewCollegeGroundTruth.mat  --outputPR ../files_pr/nc_seq_bow.pickle
+     python generatePR.py --inputSimMat similarityMat.txt --GT ../datasets/NewCollege/NewCollegeGroundTruth.mat  --outputPR ../files_pr/nc_seq_bow.pickle
      ```
    
    - SeqSLAM + VLAD
