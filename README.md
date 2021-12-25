@@ -36,9 +36,9 @@ Please change the path to datasets according to your case.
      # (1) Install DBoW3 library from this link: https://github.com/rmsalinas/DBow3
      # (2) Compile loop_closure.cpp file to create an executable file
      # (3) Run the follow command to generate similarity matrix
-     ./build/loop_closure orbvoc.dbow3 ../datasets/NewCollege/Images similarityMat.txt
+     ./build/loop_closure orbvoc.dbow3 ../datasets/NewCollege/Images nc_sim_mat.txt
      # (4) Run the following script which calculates PR from the above similarity matrix
-     python generatePR.py --inputSimMat similarityMat.txt --GT ../datasets/NewCollege/NewCollegeGroundTruth.mat  --outputPR ../files_pr/nc_seq_bow.pickle
+     python generatePR.py --inputSimMat nc_sim_mat.txt --GT ../datasets/NewCollege/NewCollegeGroundTruth.mat  --outputPR ../files_pr/nc_seq_bow.pickle
      ```
    
    - SeqSLAM + VLAD
